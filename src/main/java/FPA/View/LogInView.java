@@ -12,7 +12,7 @@ public class LogInView {
         log_in_frame.setSize(500,500);
         JPanel log_in_panel = new JPanel(new GridBagLayout());
         log_in_frame.getContentPane().add(log_in_panel,BorderLayout.NORTH);
-        GridBagConstraints log_in_constraint = new GridBagConstraints();
+        final GridBagConstraints log_in_constraint = new GridBagConstraints();
 
         JButton log_in = new JButton("Log in");
         log_in_panel.add(log_in,log_in_constraint);
@@ -66,6 +66,19 @@ public class LogInView {
                 logInConstraint.gridx = 1;
                 logInConstraint.gridy = 3;
                 logInpanel.add(next,logInConstraint);
+
+                JButton back_to_log_in = new JButton("Back to log in");
+                logInConstraint.gridx = 0;
+                logInConstraint.gridy = 3;
+                logInpanel.add(back_to_log_in,logInConstraint);
+
+                back_to_log_in.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        logInframe.show(false);
+                        log_in_frame.show(true);
+                    }
+                });
 
             }
         });
