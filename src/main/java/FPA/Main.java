@@ -2,8 +2,7 @@ package FPA;
 
 import FPA.Services.FyleSystemService;
 import FPA.Services.ModeratorSevices;
-import FPA.View.RegistrationView;
-
+import FPA.View.LogInView;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
         initDirectory();
         ModeratorSevices.initDatabase();
-        RegistrationView view = new RegistrationView();
+        LogInView view = new LogInView();
 
     }
 }
