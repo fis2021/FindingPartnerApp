@@ -31,6 +31,20 @@ public class RegistrationView {
         register_constraint.gridy = 1;
         registration_panel.add(moderator_register_button,register_constraint);
 
+        JButton back_to_log_in = new JButton("Back to log in");
+        back_to_log_in.setBounds(170,100,300,50);
+        register_constraint.gridx = 0;
+        register_constraint.gridy = 2;
+        registration_panel.add(back_to_log_in,register_constraint);
+
+        back_to_log_in.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                registration_frame.show(false);
+                LogInView view = new LogInView();
+            }
+        });
+
         moderator_register_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

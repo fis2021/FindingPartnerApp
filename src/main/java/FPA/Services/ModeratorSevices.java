@@ -1,10 +1,13 @@
 package FPA.Services;
 
 import FPA.Exceptions.AccAlreadyExistException;
+import FPA.Exceptions.UsernameOrPasswordIncorrectException;
+import FPA.Exceptions.WrongRoleException;
 import FPA.Moderator.moderator;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -36,7 +39,7 @@ public class ModeratorSevices {
         }
     }
 
-    private static String encodePassword(String salt, String password) {
+    public static String encodePassword(String salt, String password) {
         MessageDigest md = getMessageDigest();
         md.update(salt.getBytes(StandardCharsets.UTF_8));
 
@@ -57,6 +60,30 @@ public class ModeratorSevices {
         return md;
     }
 
+    public static void checkUser(String username, String password) throws UsernameOrPasswordIncorrectException, IOException {
+        checkPassAndAcc(username,password);
+    }
 
+    public static boolean checkPassAndAcc(String username, String password) throws UsernameOrPasswordIncorrectException {
+        String new_password = encodePassword(username,password);
+        for (moderator user : userRepository.find()) {
+            if (Objects.equals(username, user.getUsername()) && Objects.equals(new_password,user.getPassword()))
+            {
+                return true;
+            }
+        }
+        throw new UsernameOrPasswordIncorrectException(username);
+    }
 
+    public static boolean checkR(String username, String role) throws WrongRoleException {
+        for (moderator user : userRepository.find())
+        {
+            if(Objects.equals(username,user.getUsername()) && Objects.equals(role,user.getRole()))
+            {
+                return true;
+            }
+        }
+        throw new WrongRoleException(username);
+
+    }
 }
