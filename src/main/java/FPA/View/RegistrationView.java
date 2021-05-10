@@ -77,6 +77,16 @@ public class RegistrationView {
                 customer_registration_constraint.gridx = 3;
                 customer_registration_constraint.gridy = 4;
 
+                btnRegister.addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        if (controller.checkAvailability(txtUsername.getText(), new String(txtPassword.getPassword()), "Customer")) {
+                            JOptionPane.showMessageDialog(null, "Account create with succes", "Adding user", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Account already exist", "Adding user", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                });
                 customer_registration_panel.add(btnRegister,customer_registration_constraint);
 
             }
