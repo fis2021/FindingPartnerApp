@@ -31,6 +31,57 @@ public class RegistrationView {
         register_constraint.gridy = 1;
         registration_panel.add(moderator_register_button,register_constraint);
 
+        JButton customer_register_button = new JButton("Customer Register");
+        customer_register_button.setBounds(170,100,300,50);
+        register_constraint.gridx = 1;
+        register_constraint.gridy = 1;
+        registration_panel.add(customer_register_button,register_constraint);
+
+        customer_register_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                registration_frame.show(false);
+                final JFrame customer_registration_frame = new JFrame();
+                customer_registration_frame.setVisible(true);
+                customer_registration_frame.setSize(600,400);
+                JPanel customer_registration_panel = new JPanel(new GridBagLayout());
+                customer_registration_frame.getContentPane().add(customer_registration_panel,BorderLayout.NORTH);
+                GridBagConstraints customer_registration_constraint = new GridBagConstraints();
+                customer_registration_frame.add(customer_registration_panel);
+
+                JLabel lblUsername = new JLabel("Username:");
+                lblUsername.setBounds(10, 10, 120, 25);
+                customer_registration_constraint.gridx = 0;
+                customer_registration_constraint.gridy = 0;
+                customer_registration_constraint.insets = new Insets(10,10,1,10);
+                customer_registration_panel.add(lblUsername,customer_registration_constraint);
+
+                final JTextField txtUsername = new JTextField(10);
+                customer_registration_constraint.gridx = 1;
+                customer_registration_constraint.gridy = 0;
+                customer_registration_panel.add(txtUsername,customer_registration_constraint);
+
+                JLabel lblPassword = new JLabel("Password:");
+                lblPassword.setBounds(10, 40, 120, 25);
+                customer_registration_constraint.gridx = 0;
+                customer_registration_constraint.gridy = 1;
+                customer_registration_panel.add(lblPassword,customer_registration_constraint);
+
+                final JPasswordField txtPassword = new JPasswordField(10);
+                customer_registration_constraint.gridx = 1;
+                customer_registration_constraint.gridy = 1;
+                customer_registration_panel.add(txtPassword,customer_registration_constraint);
+
+                JButton btnRegister = new JButton("Register");
+                btnRegister.setBounds(175, 110, 100, 40);
+                customer_registration_constraint.gridx = 3;
+                customer_registration_constraint.gridy = 4;
+
+                customer_registration_panel.add(btnRegister,customer_registration_constraint);
+
+            }
+        });
+
         JButton back_to_log_in = new JButton("Back to log in");
         back_to_log_in.setBounds(170,100,300,50);
         register_constraint.gridx = 0;
