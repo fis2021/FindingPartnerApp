@@ -1,5 +1,6 @@
 package FPA;
 
+import FPA.Exceptions.WrongRoleException;
 import FPA.Services.FyleSystemService;
 import FPA.Services.ModeratorSevices;
 import FPA.View.LogInView;
@@ -18,10 +19,12 @@ public class Main {
             applicationHomePath.toFile().mkdirs();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws  WrongRoleException {
         initDirectory();
         ModeratorSevices.initDatabase();
         LogInView view = new LogInView();
+
+
 
     }
 }

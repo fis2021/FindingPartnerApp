@@ -1,12 +1,16 @@
 package FPA.View;
 
+import FPA.Controlers.LogInController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LogInView {
+
     public LogInView() {
+        final LogInController log_in_controller = new LogInController(this);
         final JFrame log_in_frame = new JFrame("Lol-App");
         log_in_frame.setVisible(true);
         log_in_frame.setSize(500,500);
@@ -47,25 +51,25 @@ public class LogInView {
                 username.setBounds(20,30,10,10);
                 logInpanel.add(username,logInConstraint);
 
-                JTextField txtuser = new JTextField(10);
+                final JTextField txtuser = new JTextField(10);
                 logInConstraint.gridx = 1;
                 logInConstraint.gridy = 0;
                 logInpanel.add(txtuser,logInConstraint);
 
-                JLabel pass = new JLabel("Password:");
+                final JLabel pass = new JLabel("Password:");
                 logInConstraint.gridx = 0;
                 logInConstraint.gridy = 1;
                 logInpanel.add(pass,logInConstraint);
 
-                JPasswordField password_field = new JPasswordField(10);
+                final JPasswordField password_field = new JPasswordField(10);
                 logInConstraint.gridx = 1;
                 logInConstraint.gridy = 1;
                 logInpanel.add(password_field,logInConstraint);
 
-                final JButton next = new JButton("Continue");
+                final JButton continue_with_log_in  = new JButton("Continue");
                 logInConstraint.gridx = 1;
                 logInConstraint.gridy = 3;
-                logInpanel.add(next,logInConstraint);
+                logInpanel.add(continue_with_log_in ,logInConstraint);
 
                 JButton back_to_log_in = new JButton("Back to log in");
                 logInConstraint.gridx = 0;
@@ -77,6 +81,30 @@ public class LogInView {
                     public void actionPerformed(ActionEvent actionEvent) {
                         logInframe.show(false);
                         log_in_frame.show(true);
+                    }
+                });
+
+                continue_with_log_in.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        if (log_in_controller.checkAcc(txtuser.getText(), new String(password_field.getPassword())))
+                        {
+                            if(log_in_controller.checkRole(txtuser.getText(),"Moderator"))
+                            {
+                                logInframe.show(false);
+                                final JFrame frame_moderator = new JFrame();
+                                frame_moderator.setVisible(true);
+                                frame_moderator.setSize(500,500);
+                                JPanel panel_moderator = new JPanel(new GridBagLayout());
+                                frame_moderator.getContentPane().add(panel_moderator, BorderLayout.WEST);
+                                GridBagConstraints c_moderator = new GridBagConstraints();
+
+                            }
+                            else
+                                JOptionPane.showMessageDialog(null, "Wrong Role", "Log In", JOptionPane.ERROR_MESSAGE);
+                        }
+                        else
+                            JOptionPane.showMessageDialog(null, "Account or password incorrect!", "Log In", JOptionPane.ERROR_MESSAGE);
                     }
                 });
 
