@@ -101,6 +101,20 @@ public class LogInView {
 
                             }
                             else
+                            if(log_in_controller.checkRole(txtuser.getText(),"Customer"))
+                            {
+                                logInframe.show(false);
+                                final JFrame customer_frame = new JFrame();
+                                customer_frame.setVisible(true);
+                                customer_frame.setSize(500,500);
+                                JPanel customer_panel = new JPanel(new GridBagLayout());
+                                customer_frame.getContentPane().add(customer_panel, BorderLayout.WEST);
+                                GridBagConstraints customer_constratint = new GridBagConstraints();
+                                JButton exemple = new JButton("Customer register");
+                                customer_panel.add(exemple,customer_constratint);
+
+                            }
+                            else
                                 JOptionPane.showMessageDialog(null, "Wrong Role", "Log In", JOptionPane.ERROR_MESSAGE);
                         }
                         else
