@@ -20,8 +20,8 @@ public class Main {
     }
 
     public static void main(String[] args) throws  WrongRoleException {
-        //initDirectory();
-        //ModeratorSevices.initDatabase();
+        initDirectory();
+        ModeratorSevices.initDatabase();
         LogInView view = new LogInView();
 
 
