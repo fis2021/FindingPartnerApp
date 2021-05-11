@@ -77,6 +77,19 @@ public class RegistrationView {
                 customer_registration_constraint.gridx = 3;
                 customer_registration_constraint.gridy = 4;
 
+                JButton back_to_choose_register = new JButton("Back");
+                customer_registration_constraint.gridx = 1;
+                customer_registration_constraint.gridy = 4;
+                customer_registration_panel.add(back_to_choose_register,customer_registration_constraint);
+
+                back_to_choose_register.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        registration_frame.show(true);
+                        customer_registration_frame.show(false);
+                    }
+                });
+
                 btnRegister.addActionListener(new ActionListener(){
                     @Override
                     public void actionPerformed(ActionEvent actionEvent) {
@@ -87,6 +100,7 @@ public class RegistrationView {
                         }
                     }
                 });
+                customer_registration_constraint.gridx = 2;
                 customer_registration_panel.add(btnRegister,customer_registration_constraint);
 
             }
