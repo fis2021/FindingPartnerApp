@@ -109,9 +109,45 @@ public class LogInView {
                                 customer_frame.setSize(500,500);
                                 JPanel customer_panel = new JPanel(new GridBagLayout());
                                 customer_frame.getContentPane().add(customer_panel, BorderLayout.WEST);
-                                GridBagConstraints customer_constratint = new GridBagConstraints();
-                                JButton exemple = new JButton("Customer register");
-                                customer_panel.add(exemple,customer_constratint);
+                                GridBagConstraints customer_constraint = new GridBagConstraints();
+
+                                String[] items = {"Top", "Jungle", "Mid", "Adc", "Support"};
+                                JLabel choose_role = new JLabel("Choose your role!");
+                                final JComboBox<String> c = new JComboBox<>(items);
+                                String[] items_rank = {"Iron","Bronze","Silver","Gold","Platinum","Diamond","Master","Challenger"};
+                                final JComboBox<String> c_rank = new JComboBox<>(items_rank);
+                                customer_frame.add(customer_panel);
+                                customer_constraint.gridx = 0;
+                                customer_constraint.gridy = 0;
+                                customer_panel.add(choose_role,customer_constraint);
+                                customer_constraint.gridx = 0;
+                                customer_constraint.gridy = 1;
+                                customer_constraint.insets = new Insets(10, 10, 10, 10);
+                                customer_panel.add(c, customer_constraint);
+
+                                customer_constraint.gridx = 1;
+                                customer_constraint.gridy = 1;
+                                customer_panel.add(c_rank,customer_constraint);
+                                JLabel choose_rank = new JLabel("Choose your rank!");
+                                customer_constraint.gridx = 1;
+                                customer_constraint.gridy = 0;
+                                customer_panel.add(choose_rank,customer_constraint);
+
+                                JLabel choose_partner = new JLabel("Choose parnter role!");
+                                customer_constraint.gridx = 2;
+                                customer_constraint.gridy = 0;
+                                customer_panel.add(choose_partner,customer_constraint);
+
+                                String[] items_partner = {"Top","Jungle","Mid","Adc","Support"};
+                                final JComboBox<String> c_partner = new JComboBox<>(items_partner);
+                                customer_constraint.gridx = 2;
+                                customer_constraint.gridy = 1;
+                                customer_panel.add(c_partner,customer_constraint);
+
+                                JButton finish = new JButton("Finish");
+                                customer_constraint.gridx = 3;
+                                customer_constraint.gridy = 2;
+                                customer_panel.add(finish,customer_constraint);
 
                             }
                             else
