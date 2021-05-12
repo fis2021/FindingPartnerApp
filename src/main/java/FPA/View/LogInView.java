@@ -6,10 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
-public class LogInView {
+public class LogInView extends JFrame {
+    private LogInController controller;
 
     public LogInView() {
+        controller = new LogInController(this);
         final LogInController log_in_controller = new LogInController(this);
         final JFrame log_in_frame = new JFrame("Lol-App");
         log_in_frame.setVisible(true);
@@ -99,7 +102,45 @@ public class LogInView {
                                 frame_moderator.getContentPane().add(panel_moderator, BorderLayout.WEST);
                                 GridBagConstraints c_moderator = new GridBagConstraints();
 
-                            }
+                                c_moderator.gridx = 0;
+                                c_moderator.gridy = 0;
+                                JButton accounts_created = new JButton("Accounts created");
+                                panel_moderator.add(accounts_created,c_moderator);
+
+                                accounts_created.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        frame_moderator.show(false);
+
+                                        final JFrame frame_players = new JFrame("Accounts created");
+                                        frame_players.setVisible(true);
+                                        frame_players.setSize(500,500);
+                                        JButton back_to_moderator = new JButton("Back");
+                                        JPanel panel_accounts = new JPanel(new GridBagLayout());
+                                        frame_players.getContentPane().add(panel_accounts, BorderLayout.NORTH);
+                                        GridBagConstraints acc_created_constraint = new GridBagConstraints();
+
+                                        int numar = controller.getNumberOfPlayers();
+                                        String acc_created = String.valueOf(numar);
+                                        acc_created_constraint.gridx = 0;
+                                        acc_created_constraint.gridy = 0;
+                                        JButton accounts = new JButton(acc_created);
+                                        panel_accounts.add(accounts,acc_created_constraint);
+
+                                       acc_created_constraint.gridx = 0;
+                                       acc_created_constraint.gridy = 1;
+                                        panel_accounts.add(back_to_moderator,acc_created_constraint);
+                                        back_to_moderator.addActionListener(new ActionListener() {
+                                            @Override
+                                            public void actionPerformed(ActionEvent actionEvent) {
+                                                frame_players.show(false);
+                                                frame_moderator.show(true);
+                                            }
+                                        });
+                                    }
+                                });
+
+                                }
                             else
                             if(log_in_controller.checkRole(txtuser.getText(),"Customer"))
                             {

@@ -37,4 +37,9 @@ public class LogInController {
     }
 
 
+    public int getNumberOfPlayers() {
+        int number = ModeratorServices.NumberOfPlayers();
+
+        return number;
+    }
 }

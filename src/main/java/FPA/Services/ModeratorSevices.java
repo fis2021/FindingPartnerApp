@@ -86,4 +86,16 @@ public class ModeratorSevices {
         throw new WrongRoleException(username);
 
     }
+
+    public static int NumberOfPlayers() {
+        int count=0;
+        for(moderator user: userRepository.find())
+        {
+            if(Objects.equals(user.getRole(),"Customer"))
+            {
+                count++;
+            }
+        }
+        return count;
+    }
 }
