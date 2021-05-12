@@ -99,6 +99,14 @@ public class LogInView {
                                 frame_moderator.getContentPane().add(panel_moderator, BorderLayout.WEST);
                                 GridBagConstraints c_moderator = new GridBagConstraints();
 
+                                c_moderator.gridx = 0;
+                                c_moderator.gridy = 0;
+                                JButton accounts_created = new JButton("Accounts created");
+                                panel_moderator.add(accounts_created,c_moderator);
+
+
+
+
                             }
                             else
                             if(log_in_controller.checkRole(txtuser.getText(),"Customer"))
