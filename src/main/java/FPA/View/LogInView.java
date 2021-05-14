@@ -98,7 +98,7 @@ public class LogInView extends JFrame {
                                 final JFrame frame_moderator = new JFrame();
                                 frame_moderator.setVisible(true);
                                 frame_moderator.setSize(500,500);
-                                JPanel panel_moderator = new JPanel(new GridBagLayout());
+                                final JPanel panel_moderator = new JPanel(new GridBagLayout());
                                 frame_moderator.getContentPane().add(panel_moderator, BorderLayout.WEST);
                                 GridBagConstraints c_moderator = new GridBagConstraints();
 
@@ -137,6 +137,65 @@ public class LogInView extends JFrame {
                                                 frame_moderator.show(true);
                                             }
                                         });
+
+
+                                    }
+                                });
+
+                                JButton annouce = new JButton("Annouce");
+                                c_moderator.gridx = 1;
+                                panel_moderator.add(annouce,c_moderator);
+
+                                annouce.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        frame_moderator.show(false);
+                                        final JFrame annouce_frame = new JFrame();
+                                        annouce_frame.setVisible(true);
+                                        annouce_frame.setSize(500,500);
+                                        JPanel annouce_panel = new JPanel(new GridBagLayout());
+                                        annouce_frame.add(annouce_panel);
+                                        GridBagConstraints annouce_constraint = new GridBagConstraints();
+                                        annouce_constraint.gridx = 0;
+                                        annouce_constraint.gridy = 0;
+                                        JButton put_annouce = new JButton("Put annouce");
+                                        annouce_panel.add(put_annouce,annouce_constraint);
+
+                                        put_annouce.addActionListener(new ActionListener() {
+                                            @Override
+                                            public void actionPerformed(ActionEvent e) {
+                                                annouce_frame.show(false);
+                                                final JFrame put_annouce_frame = new JFrame();
+                                                put_annouce_frame.setVisible(true);
+                                                put_annouce_frame.setSize(500,500);
+                                                JPanel put_annouce_panel = new JPanel(new GridBagLayout());
+                                                put_annouce_frame.add(put_annouce_panel);
+                                                GridBagConstraints put_annouce_constraint = new GridBagConstraints();
+                                                put_annouce_constraint.gridx = 0;
+                                                put_annouce_constraint.gridy = 0;
+                                                JLabel annouce = new JLabel("Annocement:");
+                                                put_annouce_panel.add(annouce,put_annouce_constraint);
+
+                                                final JTextField text_field_annouce = new JTextField(10);
+                                                put_annouce_constraint.gridx = 1;
+                                                put_annouce_panel.add(text_field_annouce,put_annouce_constraint);
+
+                                                put_annouce_constraint.gridx = 1;
+                                                put_annouce_constraint.gridy = 1;
+                                                JButton add_annouce = new JButton("Add");
+                                                put_annouce_panel.add(add_annouce,put_annouce_constraint);
+
+                                                JButton back = new JButton("Back");
+                                                put_annouce_constraint.gridx = 0;
+                                                put_annouce_panel.add(back,put_annouce_constraint);
+
+
+
+
+
+                                            }
+                                        });
+
                                     }
                                 });
 

@@ -23,8 +23,5 @@ public class Main {
         initDirectory();
         ModeratorSevices.initDatabase();
         LogInView view = new LogInView();
-
-
-
     }
 }
