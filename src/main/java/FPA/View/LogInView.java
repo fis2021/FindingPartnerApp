@@ -1,5 +1,6 @@
 package FPA.View;
 
+import FPA.Controlers.AnnoucementController;
 import FPA.Controlers.LogInController;
 
 import javax.swing.*;
@@ -10,9 +11,11 @@ import java.io.IOException;
 
 public class LogInView extends JFrame {
     private LogInController controller;
+    private AnnoucementController annoucementController;
 
     public LogInView() {
         controller = new LogInController(this);
+        annoucementController = new AnnoucementController(this);
         final LogInController log_in_controller = new LogInController(this);
         final JFrame log_in_frame = new JFrame("Lol-App");
         log_in_frame.setVisible(true);
@@ -188,6 +191,21 @@ public class LogInView extends JFrame {
                                                 JButton back = new JButton("Back");
                                                 put_annouce_constraint.gridx = 0;
                                                 put_annouce_panel.add(back,put_annouce_constraint);
+
+                                                add_annouce.addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent e) {
+                                                        String annouce_text = new String(text_field_annouce.getText());
+                                                        annoucementController.addAnnouce(annouce_text);
+                                                    }
+                                                });
+                                                back.addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent e) {
+                                                        annouce_frame.show(true);
+                                                        put_annouce_frame.show(false);
+                                                    }
+                                                });
 
 
 
