@@ -2,6 +2,7 @@ package FPA.Controlers;
 
 import FPA.Exceptions.UsernameOrPasswordIncorrectException;
 import FPA.Exceptions.WrongRoleException;
+import FPA.Services.CustomerServices;
 import FPA.Services.ModeratorSevices;
 import FPA.View.LogInView;
 
@@ -41,5 +42,9 @@ public class LogInController {
         int number = ModeratorServices.NumberOfPlayers();
 
         return number;
+    }
+
+    public void add_customer(String username,String role, String rank, String partner_role) {
+        CustomerServices.addCustomer(username,role,rank,partner_role);
     }
 }

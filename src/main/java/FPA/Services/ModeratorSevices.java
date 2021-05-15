@@ -19,6 +19,10 @@ public class ModeratorSevices {
 
     private static ObjectRepository<moderator> userRepository;
 
+    public static ObjectRepository<moderator> getUserRepository() {
+        return userRepository;
+    }
+
     public static void initDatabase() {
         Nitrite database = Nitrite.builder()
                 .filePath(getPathToFile("FPA.db").toFile())
