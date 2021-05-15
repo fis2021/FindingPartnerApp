@@ -2,20 +2,33 @@ package FPA.View;
 
 import FPA.Controlers.AnnoucementController;
 import FPA.Controlers.LogInController;
+import FPA.Controlers.TournamentController;
+import FPA.Services.TournamentServices;
+import FPA.Tournament.Tournament;
+import org.dizitart.no2.Nitrite;
+import org.dizitart.no2.objects.ObjectRepository;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
+
+import static FPA.Services.FyleSystemService.getPathToFile;
 
 public class LogInView extends JFrame {
     private LogInController controller;
     private AnnoucementController annoucementController;
+    private TournamentController tournyController;
+
+    private static ObjectRepository<Tournament> TournyRepository;
 
     public LogInView() {
         controller = new LogInController(this);
         annoucementController = new AnnoucementController(this);
+        tournyController = new TournamentController(this);
         final LogInController log_in_controller = new LogInController(this);
         final JFrame log_in_frame = new JFrame("Lol-App");
         log_in_frame.setVisible(true);
@@ -266,7 +279,7 @@ public class LogInView extends JFrame {
                                                 c_add.gridx = 0;
                                                 c_add.gridy = 0;
                                                 c_add.insets = new Insets(10,10,10,10);
-                                                JLabel name_label = new JLabel("Name:");
+                                                final JLabel name_label = new JLabel("Name:");
                                                 JLabel date_label = new JLabel("Date:");
                                                 final JTextField name_field = new JTextField(10);
                                                 final JTextField date_field = new JTextField(10);
@@ -296,6 +309,21 @@ public class LogInView extends JFrame {
                                                     }
                                                 });
 
+                                                adaugare_tournament.addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent actionEvent) {
+                                                        if(tournyController.AddTournament(name_field.getText(),date_field.getText()))
+                                                        {
+                                                            JOptionPane.showMessageDialog(null, "Tournament add with succes!", "Message", JOptionPane.INFORMATION_MESSAGE);
+                                                        } else {
+                                                            JOptionPane.showMessageDialog(null, "Add tournament fail", "Message", JOptionPane.ERROR_MESSAGE);
+                                                        }
+                                                    }
+                                                });
+
+                                           }
+                                        });
+
                                                 delete.addActionListener(new ActionListener() {
                                                     @Override
                                                     public void actionPerformed(ActionEvent actionEvent) {
@@ -308,7 +336,7 @@ public class LogInView extends JFrame {
                                                         GridBagConstraints c_delete = new GridBagConstraints();
                                                         c_delete.gridx = 0;
                                                         c_delete.gridy = 0;
-                                                        JLabel name_tournament = new JLabel("Tournament name:");
+                                                        final JLabel name_tournament = new JLabel("Tournament name:");
                                                         panel_delete.add(name_tournament,c_delete);
                                                         c_delete.gridx = 1;
                                                         final JTextField txt_tournament = new JTextField(10);
@@ -327,6 +355,24 @@ public class LogInView extends JFrame {
                                                                 add_delete_see_frame.show(true);
                                                             }
                                                         });
+
+                                                        delete.addActionListener(new ActionListener() {
+                                                            @Override
+                                                            public void actionPerformed(ActionEvent actionEvent) {
+                                                                TournyRepository = TournamentServices.getTournyRepository();
+                                                                for(Tournament t : TournyRepository.find())
+                                                                {
+                                                                    if(Objects.equals(t.getName(),txt_tournament.getText()))
+                                                                    {
+                                                                        if(TournamentServices.remove(t))
+                                                                        {
+                                                                                JOptionPane.showMessageDialog(null, "You delete the tournament with succes", "Delete", JOptionPane.INFORMATION_MESSAGE);
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                            }
+                                                        });
                                                     }
                                                 });
 
@@ -334,6 +380,8 @@ public class LogInView extends JFrame {
                                                     @Override
                                                     public void actionPerformed(ActionEvent actionEvent) {
                                                         add_delete_see_frame.show(false);
+
+
                                                         final JFrame see_tourny_frame= new JFrame("List");
                                                         see_tourny_frame.setVisible(true);
                                                         see_tourny_frame.setSize(500,500);
@@ -345,6 +393,17 @@ public class LogInView extends JFrame {
                                                         see_tourny_constraint.gridy = 0;
                                                         see_tourny_constraint.insets = new Insets(10,10,10,10);
 
+                                                        TournyRepository = TournamentServices.getTournyRepository();
+                                                        for(Tournament t : TournyRepository.find())
+                                                        {
+                                                             see_tourny_constraint.gridx = 0;
+                                                             JLabel name = new JLabel(t.getName());
+                                                             see_tourny_panel.add(name,see_tourny_constraint);
+                                                            see_tourny_constraint.gridx = 1;
+                                                            JLabel date = new JLabel(t.getDate());
+                                                            see_tourny_panel.add(date,see_tourny_constraint);
+                                                            see_tourny_constraint.gridy++;
+                                                        }
                                                         JButton back_show = new JButton("Back");
                                                         see_tourny_constraint.gridx = 0;
                                                         see_tourny_panel.add(back_show,see_tourny_constraint);
@@ -506,8 +565,6 @@ public class LogInView extends JFrame {
 
 
 
-                                            }
-                                        });
 
 
 
