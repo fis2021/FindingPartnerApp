@@ -3,6 +3,10 @@ package FPA.View;
 import FPA.Controlers.AnnoucementController;
 import FPA.Controlers.LogInController;
 import FPA.Controlers.TournamentController;
+import FPA.Customer.customer;
+import FPA.Moderator.moderator;
+import FPA.Services.CustomerServices;
+import FPA.Services.ModeratorSevices;
 import FPA.Services.TournamentServices;
 import FPA.Services.Tournament_detailsServices;
 import FPA.Tournament.Tournament;
@@ -26,8 +30,9 @@ public class LogInView extends JFrame {
     private TournamentController tournyController;
 
     private static ObjectRepository<Tournament> TournyRepository;
-
     private static ObjectRepository<TournamentDetails> TournyDetailsRepository;
+    private static ObjectRepository<customer> CustomerRepository;
+
 
 
     public LogInView() {
@@ -68,7 +73,7 @@ public class LogInView extends JFrame {
                 logInframe.getContentPane().add(logInpanel,BorderLayout.NORTH);
                 GridBagConstraints logInConstraint = new GridBagConstraints();
 
-                JLabel username = new JLabel("Username:");
+                final JLabel username = new JLabel("Username:");
                 logInConstraint.gridx = 0;
                 logInConstraint.gridy = 0;
                 logInConstraint.insets = new Insets(10,10,10,10);
@@ -654,6 +659,56 @@ public class LogInView extends JFrame {
                                 customer_constraint.gridx = 3;
                                 customer_constraint.gridy = 2;
                                 customer_panel.add(finish,customer_constraint);
+
+                                finish.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent actionEvent) {
+
+                                        customer_frame.show(false);
+                                        final JFrame show_partner_frame = new JFrame("List");
+                                        show_partner_frame.setVisible(true);
+                                        show_partner_frame.setSize(500,500);
+                                        JPanel pan_show = new JPanel(new GridBagLayout());
+                                        show_partner_frame.getContentPane().add(pan_show, BorderLayout.WEST);
+                                        GridBagConstraints c_show = new GridBagConstraints();
+                                        show_partner_frame.add(pan_show);
+                                        c_show.gridx = 0;
+                                        c_show.gridy = 0;
+                                        c_show.insets = new Insets(10,10,10,10);
+                                        String name_customer = txtuser.getText();
+                                        controller.add_customer(name_customer,String.valueOf(c.getSelectedItem()),String.valueOf(c_rank.getSelectedItem()),String.valueOf(c_partner.getSelectedItem()));
+
+                                        CustomerRepository = CustomerServices.getCustomerRepository();
+                                        for(customer c:CustomerRepository.find())
+                                        {
+                                            if(Objects.equals(String.valueOf(c_partner.getSelectedItem()),c.getCustomer_role()))
+                                            {
+                                                c_show.gridx = 0;
+                                                JLabel name = new JLabel(c.getUsername());
+                                                pan_show.add(name,c_show);
+                                                JLabel rank = new JLabel(c.getRank());
+                                                c_show.gridx=1;
+                                                pan_show.add(rank,c_show);
+                                                c_show.gridy++;
+                                            }
+                                        }
+
+                                        c_show.gridx = 0;
+                                        c_show.gridy++;
+                                        JButton tourny = new JButton("Tournaments");
+                                        pan_show.add(tourny,c_show);
+                                        c_show.gridx = 1;
+                                        JButton see_annoucements = new JButton("See annoucements");
+                                        pan_show.add(see_annoucements,c_show);
+                                        c_show.gridx = 2;
+                                        JButton message = new JButton("Message");
+                                        pan_show.add(message,c_show);
+
+
+
+
+                                    }
+                                });
 
                             }
                             else

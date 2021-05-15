@@ -2,6 +2,7 @@ package FPA.Services;
 
 import FPA.Tournament.Tournament;
 import org.dizitart.no2.Nitrite;
+import org.dizitart.no2.objects.ObjectFilter;
 import org.dizitart.no2.objects.ObjectRepository;
 
 import static FPA.Services.FyleSystemService.getPathToFile;
@@ -31,7 +32,7 @@ public class TournamentServices {
     }
 
     public static boolean remove(Tournament t) {
-        TournyRepository.remove(t);
+       // TournyRepository.remove();
         return true;
     }
 }
