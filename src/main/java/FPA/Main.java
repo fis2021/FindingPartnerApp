@@ -26,6 +26,7 @@ public class Main {
         TournamentServices.initDatabase();
         Tournament_detailsServices.initDatabase();
         CustomerServices.initDatabase();
+        ParticipantServices.initDatabase();
         LogInView view = new LogInView();
     }
 }

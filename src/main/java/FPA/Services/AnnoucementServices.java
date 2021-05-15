@@ -1,8 +1,6 @@
 package FPA.Services;
 
-import FPA.Exceptions.AccAlreadyExistException;
-import FPA.Moderator.moderator;
-import FPA.annoucements.annoucements;
+import FPA.Annoucements.annoucements;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 
@@ -21,5 +19,9 @@ public class AnnoucementServices {
 
     public static void addAnnouce(String annouce){
         annouceRepository.insert(new annoucements(annouce));
+    }
+
+    public static ObjectRepository<annoucements> getAnnouceRepository() {
+        return annouceRepository;
     }
 }

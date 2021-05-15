@@ -1,7 +1,6 @@
 package FPA.Services;
 
 import FPA.Customer.customer;
-import FPA.annoucements.annoucements;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 
