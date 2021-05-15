@@ -6,6 +6,7 @@ import org.dizitart.no2.objects.ObjectFilter;
 import org.dizitart.no2.objects.ObjectRepository;
 
 import static FPA.Services.FyleSystemService.getPathToFile;
+import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class TournamentServices {
     private static ObjectRepository<Tournament> TournyRepository;
@@ -32,7 +33,7 @@ public class TournamentServices {
     }
 
     public static boolean remove(Tournament t) {
-       // TournyRepository.remove();
+       TournyRepository.remove(eq("name",t.getName()));
         return true;
     }
 }
