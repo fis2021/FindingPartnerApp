@@ -1,6 +1,7 @@
 package FPA;
 
 import FPA.Exceptions.WrongRoleException;
+import FPA.Services.AnnoucementServices;
 import FPA.Services.FyleSystemService;
 import FPA.Services.ModeratorSevices;
 import FPA.View.LogInView;
@@ -22,9 +23,7 @@ public class Main {
     public static void main(String[] args) throws  WrongRoleException {
         initDirectory();
         ModeratorSevices.initDatabase();
+        AnnoucementServices.initDatabase();
         LogInView view = new LogInView();
-
-
-
     }
 }
