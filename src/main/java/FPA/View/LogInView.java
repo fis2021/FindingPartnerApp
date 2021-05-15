@@ -4,7 +4,9 @@ import FPA.Controlers.AnnoucementController;
 import FPA.Controlers.LogInController;
 import FPA.Controlers.TournamentController;
 import FPA.Services.TournamentServices;
+import FPA.Services.Tournament_detailsServices;
 import FPA.Tournament.Tournament;
+import FPA.Tournament.TournamentDetails;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 
@@ -24,6 +26,9 @@ public class LogInView extends JFrame {
     private TournamentController tournyController;
 
     private static ObjectRepository<Tournament> TournyRepository;
+
+    private static ObjectRepository<TournamentDetails> TournyDetailsRepository;
+
 
     public LogInView() {
         controller = new LogInController(this);
@@ -526,8 +531,27 @@ public class LogInView extends JFrame {
                                                                             }
                                                                         });
 
+                                                                        adauga.addActionListener(new ActionListener() {
+                                                                            @Override
+                                                                            public void actionPerformed(ActionEvent actionEvent) {
+                                                                                TournyRepository = TournamentServices.getTournyRepository();
+                                                                                for(Tournament t:TournyRepository.find())
+                                                                                {
+                                                                                    if(Objects.equals(t.getName(),name_tournament_txt.getText()))
+                                                                                    {
+                                                                                        if(tournyController.AddDetails(t.getName(),details_tour_txt.getText()))
+                                                                                        {
+                                                                                            JOptionPane.showMessageDialog(null, "Details added with succes", "Details", JOptionPane.INFORMATION_MESSAGE);
+
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        });
+
                                                                     }
                                                                 });
+
 
                                                                 see_details.addActionListener(new ActionListener() {
                                                                     @Override
@@ -541,6 +565,17 @@ public class LogInView extends JFrame {
                                                                         GridBagConstraints c_button_see = new GridBagConstraints();
                                                                         c_button_see.gridx = 0;
                                                                         c_button_see.gridy = 0;
+                                                                        TournyDetailsRepository = Tournament_detailsServices.getTourny_DetailsRepository();
+                                                                        for(TournamentDetails t:TournyDetailsRepository.find())
+                                                                        {
+                                                                            c_button_see.gridx = 0;
+                                                                            JLabel name = new JLabel(t.getName());
+                                                                            panel_button_see.add(name,c_button_see);
+                                                                            c_button_see.gridx = 1;
+                                                                            JLabel date = new JLabel(t.getDetails());
+                                                                            panel_button_see.add(date,c_button_see);
+                                                                            c_button_see.gridy++;
+                                                                        }
                                                                         c_button_see.insets = new Insets(10,10,10,10);
                                                                         JButton back_see_button = new JButton("Back");
                                                                         panel_button_see.add(back_see_button,c_button_see);

@@ -1,10 +1,7 @@
 package FPA;
 
 import FPA.Exceptions.WrongRoleException;
-import FPA.Services.AnnoucementServices;
-import FPA.Services.FyleSystemService;
-import FPA.Services.ModeratorSevices;
-import FPA.Services.TournamentServices;
+import FPA.Services.*;
 import FPA.View.LogInView;
 
 import java.nio.file.Files;
@@ -27,6 +24,7 @@ public class Main {
         ModeratorSevices.initDatabase();
         AnnoucementServices.initDatabase();
         TournamentServices.initDatabase();
+        Tournament_detailsServices.initDatabase();
         LogInView view = new LogInView();
     }
 }
