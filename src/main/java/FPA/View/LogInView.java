@@ -781,7 +781,9 @@ public class LogInView extends JFrame {
                                         c_show.gridx = 2;
                                         JButton message = new JButton("Message");
                                         pan_show.add(message,c_show);
-                                        
+
+
+
                                         see_annoucements.addActionListener(new ActionListener() {
                                             @Override
                                             public void actionPerformed(ActionEvent e) {
