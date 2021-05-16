@@ -13,6 +13,9 @@ public class RegistrationController {
     public JComboBox role;
     private ModeratorSevices ModeratorServices;
 
+    public RegistrationController() {
+    }
+
     public RegistrationController(RegistrationView view) {
         this.view = view;
     }

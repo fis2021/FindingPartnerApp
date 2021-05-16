@@ -11,13 +11,17 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Objects;
 
 import static FPA.Services.FyleSystemService.getPathToFile;
+import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
+
 public class ModeratorSevices {
 
 
     private static ObjectRepository<moderator> userRepository;
+    private static Nitrite database;
 
     public static ObjectRepository<moderator> getUserRepository() {
         return userRepository;
@@ -101,5 +105,22 @@ public class ModeratorSevices {
             }
         }
         return count;
+    }
+
+    public static List<moderator> getAllUsers() {
+        return userRepository.find().toList();
+    }
+
+    public static void delete(String test_username) {
+        userRepository.remove(eq("username",test_username));
+
+    }
+
+    public static void close() {
+        userRepository.close();
+    }
+
+    public static List<moderator> getUsers() {
+        return userRepository.find().toList();
     }
 }
