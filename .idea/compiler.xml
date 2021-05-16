@@ -9,5 +9,8 @@
         <module name="FindingPartnerApp" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="untitled" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

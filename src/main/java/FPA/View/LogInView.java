@@ -698,7 +698,7 @@ public class LogInView extends JFrame {
                                         JButton see_annoucements = new JButton("See annoucements");
                                         pan_show.add(see_annoucements,c_show);
                                         c_show.gridx = 2;
-                                        JButton message = new JButton("Message");
+                                        final JButton message = new JButton("Message");
                                         pan_show.add(message,c_show);
                                         
                                         see_annoucements.addActionListener(new ActionListener() {
@@ -905,12 +905,109 @@ public class LogInView extends JFrame {
                                             }
                                         });
 
+                                        message.addActionListener(new ActionListener() {
+                                            @Override
+                                            public void actionPerformed(ActionEvent e) {
+                                                show_partner_frame.show(false);
+                                                final JFrame messages_frame = new JFrame();
+                                                messages_frame.setVisible(true);
+                                                messages_frame.setSize(500,500);
+                                                JPanel messages_panel = new JPanel(new GridBagLayout());
+                                                GridBagConstraints c_messages = new GridBagConstraints();
+                                                messages_frame.add(messages_panel);
+                                                c_messages.gridx = 0;
+                                                c_messages.gridy = 0;
+                                                JLabel note = new JLabel("Note:");
+                                                messages_panel.add(note,c_messages);
+                                                c_messages.gridy = 1;
+                                                JLabel info = new JLabel("This messagery works like an email");
+                                                messages_panel.add(info,c_messages);
+                                                JLabel player_name = new JLabel("Player name:");
+                                                c_messages.gridy = 2;
+                                                messages_panel.add(player_name,c_messages);
+
+                                                c_messages.gridx = 1;
+                                                JTextField player_name_field = new JTextField(10);
+                                                messages_panel.add(player_name_field,c_messages);
+
+                                                c_messages.gridx = 0;
+                                                JLabel mess = new JLabel("Message:");
+                                                c_messages.gridy = 3;
+                                                messages_panel.add(mess,c_messages);
+
+                                                c_messages.gridx = 1;
+                                                JTextField mess_txt = new JTextField(10);
+                                                messages_panel.add(mess_txt,c_messages);
+                                                c_messages.gridy = 4;
+                                                JButton back = new JButton("Back");
+                                                c_messages.gridx = 0;
+                                                messages_panel.add(back,c_messages);
+
+                                                c_messages.gridx = 1;
+                                                final JButton see_messages = new JButton("See messages");
+                                                messages_panel.add(see_messages,c_messages);
+
+                                                c_messages.gridx = 2;
+                                                JButton send_messages = new JButton("Send message");
+                                                messages_panel.add(send_messages,c_messages);
+
+                                                back.addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent e) {
+                                                        show_partner_frame.show(true);
+                                                        messages_frame.show(false);
+                                                    }
+                                                });
+
+                                                send_messages.addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent e) {
+
+                                                    }
+                                                });
+
+                                                see_messages.addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent e) {
+                                                        messages_frame.show(false);
+                                                        final JFrame see_messages_frame = new JFrame();
+                                                        see_messages_frame.setVisible(true);
+                                                        see_messages_frame.setSize(500,500);
+                                                        JPanel see_messages_panel = new JPanel(new GridBagLayout());
+                                                        GridBagConstraints c_messages = new GridBagConstraints();
+                                                        see_messages_frame.add(see_messages_panel);
+                                                        c_messages.gridx = 0;
+                                                        c_messages.gridy = 0;
+                                                        JButton back = new JButton("Back");
+                                                        see_messages_panel.add(back,c_messages);
+
+                                                        JButton see_messages_you_send = new JButton("See messages you send");
+                                                        c_messages.gridx = 1;
+                                                        see_messages_panel.add(see_messages_you_send,c_messages);
+
+                                                        JButton see_messages_you_got = new JButton("See messages you got");
+                                                        c_messages.gridx = 2;
+                                                        see_messages_panel.add(see_messages_you_got,c_messages);
+
+                                                        back.addActionListener(new ActionListener() {
+                                                            @Override
+                                                            public void actionPerformed(ActionEvent e) {
+                                                                see_messages_frame.show(false);
+                                                                messages_frame.show(true);
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            }
+                                        });
+
 
 
 
 
                                     }
                                 });
+
 
                             }
                             else
