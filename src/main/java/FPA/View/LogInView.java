@@ -1,10 +1,8 @@
 package FPA.View;
 
-import FPA.Controlers.AnnoucementController;
-import FPA.Controlers.LogInController;
-import FPA.Controlers.ParticipantController;
-import FPA.Controlers.TournamentController;
+import FPA.Controlers.*;
 import FPA.Customer.customer;
+import FPA.Messages.messages;
 import FPA.Services.*;
 import FPA.Tournament.Tournament;
 import FPA.Tournament.TournamentDetails;
@@ -22,11 +20,13 @@ public class LogInView extends JFrame {
     private AnnoucementController annoucementController;
     private TournamentController tournyController;
     private ParticipantController participantController;
+    private MessagesController messagesController;
 
     private static ObjectRepository<Tournament> TournyRepository;
     private static ObjectRepository<TournamentDetails> TournyDetailsRepository;
     private static ObjectRepository<customer> CustomerRepository;
     private static ObjectRepository<annoucements> AnnouceRepository;
+    private static ObjectRepository<messages> MessageRepository;
 
 
 
@@ -35,6 +35,7 @@ public class LogInView extends JFrame {
         annoucementController = new AnnoucementController(this);
         tournyController = new TournamentController(this);
         participantController = new ParticipantController(this);
+        messagesController = new MessagesController(this);
         final LogInController log_in_controller = new LogInController(this);
         final JFrame log_in_frame = new JFrame("Lol-App");
         log_in_frame.setVisible(true);
@@ -927,7 +928,7 @@ public class LogInView extends JFrame {
                                                 messages_panel.add(player_name,c_messages);
 
                                                 c_messages.gridx = 1;
-                                                JTextField player_name_field = new JTextField(10);
+                                                final JTextField player_name_field = new JTextField(10);
                                                 messages_panel.add(player_name_field,c_messages);
 
                                                 c_messages.gridx = 0;
@@ -936,7 +937,7 @@ public class LogInView extends JFrame {
                                                 messages_panel.add(mess,c_messages);
 
                                                 c_messages.gridx = 1;
-                                                JTextField mess_txt = new JTextField(10);
+                                                final JTextField mess_txt = new JTextField(10);
                                                 messages_panel.add(mess_txt,c_messages);
                                                 c_messages.gridy = 4;
                                                 JButton back = new JButton("Back");
@@ -962,6 +963,7 @@ public class LogInView extends JFrame {
                                                 send_messages.addActionListener(new ActionListener() {
                                                     @Override
                                                     public void actionPerformed(ActionEvent e) {
+                                                        messagesController.sendMessage(txtuser.getText(),player_name_field.getText(), mess_txt.getText() );
 
                                                     }
                                                 });
@@ -974,7 +976,7 @@ public class LogInView extends JFrame {
                                                         see_messages_frame.setVisible(true);
                                                         see_messages_frame.setSize(500,500);
                                                         JPanel see_messages_panel = new JPanel(new GridBagLayout());
-                                                        GridBagConstraints c_messages = new GridBagConstraints();
+                                                        final GridBagConstraints c_messages = new GridBagConstraints();
                                                         see_messages_frame.add(see_messages_panel);
                                                         c_messages.gridx = 0;
                                                         c_messages.gridy = 0;
@@ -985,9 +987,104 @@ public class LogInView extends JFrame {
                                                         c_messages.gridx = 1;
                                                         see_messages_panel.add(see_messages_you_send,c_messages);
 
+                                                        see_messages_you_send.addActionListener(new ActionListener() {
+                                                            @Override
+                                                            public void actionPerformed(ActionEvent e) {
+                                                                see_messages_frame.show(false);
+                                                                final JFrame see_messages_you_send_frame = new JFrame();
+                                                                see_messages_you_send_frame.setVisible(true);
+                                                                see_messages_you_send_frame.setSize(500,500);
+                                                                JPanel see_messages_you_send_panel = new JPanel(new GridBagLayout());
+                                                                GridBagConstraints c_messages_send = new GridBagConstraints();
+                                                                see_messages_you_send_frame.add(see_messages_you_send_panel);
+                                                                c_messages_send.gridx = 0;
+                                                                c_messages_send.gridy = 0;
+                                                                JLabel to = new JLabel("To:");
+                                                                see_messages_you_send_panel.add(to,c_messages_send);
+
+                                                                JLabel message = new JLabel("Message:");
+                                                                c_messages_send.gridx = 3;
+                                                                see_messages_you_send_panel.add(message,c_messages_send);
+                                                                MessageRepository = MessagesServices.getMessageryRepository();
+                                                                        for(messages m:MessageRepository.find())
+                                                                        {
+                                                                            if(Objects.equals(m.getFrom(),txtuser.getText()))
+                                                                            {
+                                                                                c_messages_send.gridy++;
+                                                                                c_messages_send.gridx = 0;
+                                                                                JLabel to_m = new JLabel(m.getTo());
+                                                                                see_messages_you_send_panel.add(to_m,c_messages_send);
+                                                                                c_messages_send.gridx = 3;
+                                                                                JLabel mess_m = new JLabel(m.getMess());
+                                                                                see_messages_you_send_panel.add(mess_m,c_messages_send);
+                                                                            }
+                                                                        }
+
+                                                                        c_messages_send.gridy++;
+                                                                        JButton back = new JButton("Back");
+                                                                        see_messages_you_send_panel.add(back);
+                                                                        back.addActionListener(new ActionListener() {
+                                                                            @Override
+                                                                            public void actionPerformed(ActionEvent e) {
+                                                                                see_messages_frame.show(true);
+                                                                                see_messages_you_send_frame.show(false);
+                                                                            }
+                                                                        });
+                                                            }
+                                                        });
+
                                                         JButton see_messages_you_got = new JButton("See messages you got");
                                                         c_messages.gridx = 2;
                                                         see_messages_panel.add(see_messages_you_got,c_messages);
+
+                                                        see_messages_you_got.addActionListener(new ActionListener() {
+                                                            @Override
+                                                            public void actionPerformed(ActionEvent e) {
+                                                                see_messages_frame.show(false);
+                                                                final JFrame see_messages_you_got = new JFrame();
+                                                                see_messages_you_got.setVisible(true);
+                                                                see_messages_you_got.setSize(500,500);
+                                                                JPanel see_messages_you_got_panel = new JPanel(new GridBagLayout());
+                                                                GridBagConstraints c_messages_got = new GridBagConstraints();
+                                                                see_messages_you_got.add(see_messages_you_got_panel);
+                                                                c_messages_got.gridx = 0;
+                                                                c_messages_got.gridy = 0;
+                                                                JLabel to = new JLabel("From:");
+                                                                see_messages_you_got_panel.add(to,c_messages_got);
+
+                                                                JLabel message = new JLabel("Message:");
+                                                                c_messages_got.gridx = 3;
+                                                                see_messages_you_got_panel.add(message,c_messages_got);
+
+                                                                MessageRepository = MessagesServices.getMessageryRepository();
+                                                                for(messages m:MessageRepository.find())
+                                                                {
+                                                                    if(Objects.equals(m.getFrom(),txtuser.getText()))
+                                                                    {
+                                                                        c_messages_got.gridy++;
+                                                                        c_messages_got.gridx = 0;
+                                                                        JLabel to_m = new JLabel(m.getTo());
+                                                                        see_messages_you_got_panel.add(to_m,c_messages_got);
+                                                                        c_messages_got.gridx = 3;
+                                                                        JLabel mess_m = new JLabel(m.getMess());
+                                                                        see_messages_you_got_panel.add(mess_m,c_messages_got);
+                                                                    }
+                                                                }
+
+                                                                c_messages_got.gridy++;
+                                                                JButton back = new JButton("Back");
+                                                                see_messages_you_got_panel.add(back);
+                                                                back.addActionListener(new ActionListener() {
+                                                                    @Override
+                                                                    public void actionPerformed(ActionEvent e) {
+                                                                        see_messages_frame.show(true);
+                                                                        see_messages_you_got.show(false);
+                                                                    }
+                                                                });
+
+
+                                                            }
+                                                        });
 
                                                         back.addActionListener(new ActionListener() {
                                                             @Override

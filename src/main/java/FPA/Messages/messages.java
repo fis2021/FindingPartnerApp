@@ -5,6 +5,12 @@ public class messages {
     private String to;
     private String mess;
 
+    public messages(String from, String to, String mess) {
+        this.from = from;
+        this.to = to;
+        this.mess = mess;
+    }
+
     public String getFrom() {
         return from;
     }
