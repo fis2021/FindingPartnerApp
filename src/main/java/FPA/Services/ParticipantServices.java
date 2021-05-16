@@ -13,7 +13,7 @@ public class ParticipantServices {
 
     private static ObjectRepository<Tournament> participantRepository;
 
-    public static void initPartDatabase() {
+    public static void initDatabase() {
         Nitrite database = Nitrite.builder()
                 .filePath(getPathToFile("Paricipants.db").toFile())
                 .openOrCreate("test","test" );
@@ -32,5 +32,9 @@ public class ParticipantServices {
     public static void delete_participants(String test_username) {
         participantRepository.remove(eq("name",test_username));
 
+    }
+
+    public static ObjectRepository<Tournament> getParticipantRepository() {
+        return participantRepository;
     }
 }

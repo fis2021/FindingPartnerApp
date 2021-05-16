@@ -5,6 +5,9 @@ public class messages {
     private String to;
     private String mess;
 
+    public messages() {
+    }
+
     public messages(String from, String to, String mess) {
         this.from = from;
         this.to = to;
