@@ -5,6 +5,8 @@ import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectFilter;
 import org.dizitart.no2.objects.ObjectRepository;
 
+import java.util.List;
+
 import static FPA.Services.FyleSystemService.getPathToFile;
 import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
@@ -35,5 +37,13 @@ public class TournamentServices {
     public static boolean remove(Tournament t) {
        TournyRepository.remove(eq("name",t.getName()));
         return true;
+    }
+
+    public static List<Tournament> getAllTournys() {
+        return TournyRepository.find().toList();
+    }
+
+    public static void delete(String test_tourny) {
+        TournyRepository.remove(eq("name",test_tourny));
     }
 }

@@ -37,4 +37,12 @@ public class ParticipantServices {
     public static ObjectRepository<Tournament> getParticipantRepository() {
         return participantRepository;
     }
+
+    public static List<Tournament> getAllParticipants() {
+        return participantRepository.find().toList();
+    }
+
+    public static void delete(String test_annouce) {
+        participantRepository.remove(eq("name",test_annouce));
+    }
 }

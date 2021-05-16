@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class CustomerServicesTest {
 
     @Test
-    public void testCopyDefaultFileIfNotExists() throws Exception{
+    public void testCopyDefaultCustomerNotExists() throws Exception{
         CustomerServices.initDatabase();
         assertTrue(Files.exists(FyleSystemService.getPathToFile()));
     }
