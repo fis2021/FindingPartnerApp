@@ -33,4 +33,8 @@ public class ParticipantServices {
         participantRepository.remove(eq("name",test_username));
 
     }
+
+    public static ObjectRepository<Tournament> getParticipantRepository() {
+        return participantRepository;
+    }
 }

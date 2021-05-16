@@ -25,15 +25,19 @@ public class AnnoucementServices {
     }
 
     public static ObjectRepository<annoucements> getAnnouceRepository() {
+
         return annouceRepository;
     }
 
     public static List<annoucements> getAllAnnoucements() {
+
         return annouceRepository.find().toList();
     }
 
     public static void delete(String test_annouce) {
         annouceRepository.remove(eq("annouce",test_annouce));
 
+
     }
+
 }

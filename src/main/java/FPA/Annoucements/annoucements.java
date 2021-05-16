@@ -5,6 +5,9 @@ import java.util.Objects;
 public class annoucements {
     private String annouce;
 
+    public annoucements() {
+    }
+
     public annoucements(String annouce) {
         this.annouce = annouce;
     }
