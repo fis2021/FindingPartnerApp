@@ -36,8 +36,6 @@ public class AnnoucementServices {
 
     public static void delete(String test_annouce) {
         annouceRepository.remove(eq("annouce",test_annouce));
-
-
     }
 
 }

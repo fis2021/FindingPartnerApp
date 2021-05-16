@@ -1,11 +1,13 @@
 package FPA.Services;
 
-import FPA.Tournament.Tournament;
 import FPA.Tournament.TournamentDetails;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 
+import java.util.List;
+
 import static FPA.Services.FyleSystemService.getPathToFile;
+import static org.dizitart.no2.objects.filters.ObjectFilters.eq;
 
 public class Tournament_detailsServices {
 
@@ -31,4 +33,13 @@ public class Tournament_detailsServices {
     public static void setTourny_DetailsRepository(ObjectRepository<TournamentDetails> tourny_DetailsRepository) {
         Tourny_DetailsRepository = tourny_DetailsRepository;
     }
+
+    public static void delete(String details) {
+        Tourny_DetailsRepository.remove(eq("name",details));
+    }
+
+    public static List<TournamentDetails> getAllDetails() {
+        return Tourny_DetailsRepository.find().toList();
+    }
+
 }

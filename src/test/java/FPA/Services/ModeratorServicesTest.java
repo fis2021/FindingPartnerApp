@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 public class ModeratorServicesTest {
 
     @Test
-    public void testCopyDefaultFileIfNotExists() throws Exception{
+    public void testCopyDefaultModeratorNotExists() throws Exception{
         ModeratorSevices.initDatabase();
         assertTrue(Files.exists(FyleSystemService.getPathToFile()));
     }
