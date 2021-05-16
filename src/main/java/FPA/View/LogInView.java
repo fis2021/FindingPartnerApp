@@ -2,36 +2,31 @@ package FPA.View;
 
 import FPA.Controlers.AnnoucementController;
 import FPA.Controlers.LogInController;
+import FPA.Controlers.ParticipantController;
 import FPA.Controlers.TournamentController;
 import FPA.Customer.customer;
-import FPA.Moderator.moderator;
-import FPA.Services.CustomerServices;
-import FPA.Services.ModeratorSevices;
-import FPA.Services.TournamentServices;
-import FPA.Services.Tournament_detailsServices;
+import FPA.Services.*;
 import FPA.Tournament.Tournament;
 import FPA.Tournament.TournamentDetails;
-import org.dizitart.no2.Nitrite;
+import FPA.Annoucements.annoucements;
 import org.dizitart.no2.objects.ObjectRepository;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
-
-import static FPA.Services.FyleSystemService.getPathToFile;
 
 public class LogInView extends JFrame {
     private LogInController controller;
     private AnnoucementController annoucementController;
     private TournamentController tournyController;
+    private ParticipantController participantController;
 
     private static ObjectRepository<Tournament> TournyRepository;
     private static ObjectRepository<TournamentDetails> TournyDetailsRepository;
     private static ObjectRepository<customer> CustomerRepository;
+    private static ObjectRepository<annoucements> AnnouceRepository;
 
 
 
@@ -39,6 +34,7 @@ public class LogInView extends JFrame {
         controller = new LogInController(this);
         annoucementController = new AnnoucementController(this);
         tournyController = new TournamentController(this);
+        participantController = new ParticipantController(this);
         final LogInController log_in_controller = new LogInController(this);
         final JFrame log_in_frame = new JFrame("Lol-App");
         log_in_frame.setVisible(true);
@@ -573,6 +569,7 @@ public class LogInView extends JFrame {
                                                                         TournyDetailsRepository = Tournament_detailsServices.getTourny_DetailsRepository();
                                                                         for(TournamentDetails t:TournyDetailsRepository.find())
                                                                         {
+
                                                                             c_button_see.gridx = 0;
                                                                             JLabel name = new JLabel(t.getName());
                                                                             panel_button_see.add(name,c_button_see);
@@ -703,6 +700,211 @@ public class LogInView extends JFrame {
                                         c_show.gridx = 2;
                                         JButton message = new JButton("Message");
                                         pan_show.add(message,c_show);
+                                        
+                                        see_annoucements.addActionListener(new ActionListener() {
+                                            @Override
+                                            public void actionPerformed(ActionEvent e) {
+                                                show_partner_frame.show(false);
+                                                final JFrame show_annouce = new JFrame("List");
+                                                show_annouce.setVisible(true);
+                                                show_annouce.setSize(500,500);
+                                                JPanel pan_show_annouce = new JPanel(new GridBagLayout());
+                                                GridBagConstraints c_show_annouce = new GridBagConstraints();
+                                                show_annouce.add(pan_show_annouce);
+                                                c_show_annouce.gridx = 0;
+                                                c_show_annouce.gridy = 0;
+                                                AnnouceRepository = AnnoucementServices.getAnnouceRepository();
+                                                for(annoucements ann:AnnouceRepository.find())
+                                                {
+                                                    c_show_annouce.gridx = 0;
+                                                    JLabel annouce_name = new JLabel(ann.getAnnouce());
+                                                    pan_show_annouce.add(annouce_name,c_show_annouce);
+                                                    c_show_annouce.gridy++;
+                                                }
+
+                                                JButton back_to_show_partner = new JButton("Back");
+                                                pan_show_annouce.add(back_to_show_partner,c_show_annouce);
+                                                back_to_show_partner.addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent e) {
+                                                        show_partner_frame.show(true);
+                                                        show_annouce.show(false);
+                                                    }
+                                                });
+
+                                            }
+                                        });
+
+                                        tourny.addActionListener(new ActionListener() {
+                                            @Override
+                                            public void actionPerformed(ActionEvent e) {
+                                                show_partner_frame.show(false);
+                                                final JFrame tourny_shows_customer = new JFrame("List");
+                                                tourny_shows_customer.setVisible(true);
+                                                tourny_shows_customer.setSize(500,500);
+                                                JPanel pan_show_tourny = new JPanel(new GridBagLayout());
+                                                GridBagConstraints c_show_tourny = new GridBagConstraints();
+                                                tourny_shows_customer.add(pan_show_tourny);
+                                                c_show_tourny.gridx = 0;
+                                                c_show_tourny.gridy = 0;
+                                                TournyDetailsRepository = Tournament_detailsServices.getTourny_DetailsRepository();
+                                                for(TournamentDetails t:TournyDetailsRepository.find())
+                                                {
+                                                    c_show_tourny.gridx = 0;
+                                                    JLabel name = new JLabel(t.getName());
+                                                    pan_show_tourny.add(name,c_show_tourny);
+                                                    c_show_tourny.gridx = 1;
+                                                    JLabel date = new JLabel(t.getDetails());
+                                                    pan_show_tourny.add(date,c_show_tourny);
+                                                    c_show_tourny.gridy++;
+                                                }
+                                                JButton details_tournys = new JButton("Details");
+                                                pan_show_tourny.add(details_tournys,c_show_tourny);
+                                                c_show_tourny.gridx++;
+                                                final JButton participate = new JButton("Participate");
+                                                pan_show_tourny.add(participate,c_show_tourny);
+                                                c_show_tourny.gridx = 0;
+                                                c_show_tourny.gridy++;
+                                                JButton back_see_button = new JButton("Back");
+                                                pan_show_tourny.add(back_see_button,c_show_tourny);
+                                                back_see_button.addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent e) {
+                                                        show_partner_frame.show(true);
+                                                        tourny_shows_customer.show(false);
+                                                    }
+                                                });
+
+                                                details_tournys.addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent e) {
+                                                        tourny_shows_customer.show(false);
+                                                        final JFrame details_tournys_frame = new JFrame("List");
+                                                        details_tournys_frame.setVisible(true);
+                                                        details_tournys_frame.setSize(500,500);
+                                                        JPanel pan_details_tournys = new JPanel(new GridBagLayout());
+                                                        GridBagConstraints c_details_tournys = new GridBagConstraints();
+                                                        details_tournys_frame.add(pan_details_tournys);
+                                                        c_details_tournys.gridx = 0;
+                                                        c_details_tournys.gridy = 0;
+                                                        JLabel tourny_name = new JLabel("Tournament name:");
+                                                        pan_details_tournys.add(tourny_name,c_details_tournys);
+                                                        final JTextField field_name = new JTextField(10);
+                                                        c_details_tournys.gridx++;
+                                                        pan_details_tournys.add(field_name,c_details_tournys);
+
+                                                        JButton back_tourny_frame = new JButton("Back");
+                                                        c_details_tournys.gridy++;
+                                                        pan_details_tournys.add(back_tourny_frame,c_details_tournys);
+
+                                                        JButton see = new JButton("See");
+                                                        c_details_tournys.gridx++;
+                                                        pan_details_tournys.add(see,c_details_tournys);
+
+                                                        back_tourny_frame.addActionListener(new ActionListener() {
+                                                            @Override
+                                                            public void actionPerformed(ActionEvent e) {
+                                                                tourny_shows_customer.show(true);
+                                                                details_tournys_frame.show(false);
+                                                            }
+                                                        });
+
+                                                        see.addActionListener(new ActionListener() {
+                                                            @Override
+                                                            public void actionPerformed(ActionEvent e) {
+                                                                details_tournys_frame.show(false);
+                                                                final JFrame see_details = new JFrame("List");
+                                                                see_details.setVisible(true);
+                                                                see_details.setSize(500,500);
+                                                                JPanel panel_see_details = new JPanel(new GridBagLayout());
+                                                                GridBagConstraints c_details_see = new GridBagConstraints();
+                                                                see_details.add(panel_see_details);
+                                                                c_details_see.gridx = 0;
+                                                                c_details_see.gridy = 0;
+                                                                TournyDetailsRepository = Tournament_detailsServices.getTourny_DetailsRepository();
+                                                                for(TournamentDetails t:TournyDetailsRepository.find())
+                                                                {
+                                                                    if(Objects.equals(t.getName(),field_name.getText()))
+                                                                    {
+                                                                        JLabel details = new JLabel(t.getDetails());
+                                                                        panel_see_details.add(details,c_details_see);
+                                                                        c_details_see.gridy++;
+                                                                    }
+
+                                                                }
+
+                                                               JButton back = new JButton("Back");
+                                                                c_details_see.gridy++;
+                                                                panel_see_details.add(back);
+                                                                back.addActionListener(new ActionListener() {
+                                                                    @Override
+                                                                    public void actionPerformed(ActionEvent e) {
+                                                                        see_details.show(false);
+                                                                        details_tournys_frame.show(true);
+                                                                    }
+                                                                });
+
+                                                            }
+                                                        });
+
+                                                    }
+                                                });
+                                                participate.addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent e) {
+                                                        tourny_shows_customer.show(false);
+                                                        final JFrame participate_frame = new JFrame();
+                                                        participate_frame.setVisible(true);
+                                                        participate_frame.setSize(500,500);
+                                                        JPanel participate_panel = new JPanel(new GridBagLayout());
+                                                        GridBagConstraints c_participate = new GridBagConstraints();
+                                                        participate_frame.add(participate_panel);
+                                                        c_participate.gridx = 0;
+                                                        c_participate.gridy = 0;
+                                                        JLabel username_participate = new JLabel("Userame:");
+                                                        participate_panel.add(username_participate,c_participate);
+
+                                                        c_participate.gridx = 1;
+                                                        final JTextField textfield_participate = new JTextField(10);
+                                                        participate_panel.add(textfield_participate,c_participate);
+
+                                                        c_participate.gridx = 0;
+                                                        c_participate.gridy = 1;
+                                                        JLabel tournament_name = new JLabel("Tournament name:");
+                                                        participate_panel.add(tournament_name,c_participate);
+
+                                                        c_participate.gridx = 1;
+                                                        final JTextField textField_tournament = new JTextField(10);
+                                                        participate_panel.add(textField_tournament,c_participate);
+
+                                                        JButton back = new JButton("Back");
+                                                        c_participate.gridx = 0;
+                                                        c_participate.gridy = 2;
+                                                        participate_panel.add(back,c_participate);
+                                                        JButton finish = new JButton("Finish");
+                                                        c_participate.gridx = 1;
+                                                        participate_panel.add(finish,c_participate);
+
+                                                        back.addActionListener(new ActionListener() {
+                                                            @Override
+                                                            public void actionPerformed(ActionEvent e) {
+                                                                tourny_shows_customer.show(true);
+                                                                participate_frame.show(false);
+                                                            }
+                                                        });
+
+                                                        finish.addActionListener(new ActionListener() {
+                                                            @Override
+                                                            public void actionPerformed(ActionEvent e) {
+                                                                participantController.addParticipant(textField_tournament.getText(),textfield_participate.getText());
+                                                            }
+                                                        });
+
+                                                    }
+                                                });
+                                            }
+                                        });
+
 
 
 

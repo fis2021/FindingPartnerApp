@@ -1,4 +1,4 @@
-package FPA.annoucements;
+package FPA.Annoucements;
 
 import java.util.Objects;
 
