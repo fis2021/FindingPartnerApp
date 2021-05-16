@@ -27,6 +27,7 @@ public class LogInView extends JFrame {
     private static ObjectRepository<TournamentDetails> TournyDetailsRepository;
     private static ObjectRepository<customer> CustomerRepository;
     private static ObjectRepository<annoucements> AnnouceRepository;
+    private static ObjectRepository<Tournament> ParticipantRepository;
 
 
 
@@ -164,7 +165,7 @@ public class LogInView extends JFrame {
                                     }
                                 });
 
-                                JButton annouce = new JButton("Annouce");
+                                final JButton annouce = new JButton("Annouce");
                                 c_moderator.gridx = 1;
                                 panel_moderator.add(annouce,c_moderator);
 
@@ -182,6 +183,18 @@ public class LogInView extends JFrame {
                                         annouce_constraint.gridy = 0;
                                         JButton put_annouce = new JButton("Put annouce");
                                         annouce_panel.add(put_annouce,annouce_constraint);
+
+                                        JButton back = new JButton("Back");
+                                        annouce_constraint.gridy = 1;
+                                        annouce_panel.add(back,annouce_constraint);
+
+                                        back.addActionListener(new ActionListener() {
+                                            @Override
+                                            public void actionPerformed(ActionEvent actionEvent) {
+                                                frame_moderator.show(true);
+                                                annouce_frame.show(false);
+                                            }
+                                        });
 
                                         put_annouce.addActionListener(new ActionListener() {
                                             @Override
@@ -210,14 +223,20 @@ public class LogInView extends JFrame {
                                                 JButton back = new JButton("Back");
                                                 put_annouce_constraint.gridx = 0;
                                                 put_annouce_panel.add(back,put_annouce_constraint);
+                                                    add_annouce.addActionListener(new ActionListener() {
+                                                        @Override
+                                                        public void actionPerformed(ActionEvent e) {
+                                                            if(Objects.equals(text_field_annouce.getText(),""))
+                                                            {
+                                                                JOptionPane.showMessageDialog(null, "Please write an annoucement", "Error", JOptionPane.ERROR_MESSAGE);
+                                                            }
+                                                            else {
+                                                                String annouce_text = new String(text_field_annouce.getText());
+                                                                annoucementController.addAnnouce(annouce_text);
+                                                            }
+                                                        }
+                                                    });
 
-                                                add_annouce.addActionListener(new ActionListener() {
-                                                    @Override
-                                                    public void actionPerformed(ActionEvent e) {
-                                                        String annouce_text = new String(text_field_annouce.getText());
-                                                        annoucementController.addAnnouce(annouce_text);
-                                                    }
-                                                });
                                                 back.addActionListener(new ActionListener() {
                                                     @Override
                                                     public void actionPerformed(ActionEvent e) {
@@ -318,11 +337,17 @@ public class LogInView extends JFrame {
                                                 adaugare_tournament.addActionListener(new ActionListener() {
                                                     @Override
                                                     public void actionPerformed(ActionEvent actionEvent) {
-                                                        if(tournyController.AddTournament(name_field.getText(),date_field.getText()))
+                                                        if(Objects.equals(name_field.getText(),"") || Objects.equals(date_field.getText(),""))
                                                         {
-                                                            JOptionPane.showMessageDialog(null, "Tournament add with succes!", "Message", JOptionPane.INFORMATION_MESSAGE);
-                                                        } else {
-                                                            JOptionPane.showMessageDialog(null, "Add tournament fail", "Message", JOptionPane.ERROR_MESSAGE);
+                                                            JOptionPane.showMessageDialog(null, "No name or date", "Error", JOptionPane.INFORMATION_MESSAGE);
+
+                                                        }
+                                                        else {
+                                                            if (tournyController.AddTournament(name_field.getText(), date_field.getText())) {
+                                                                JOptionPane.showMessageDialog(null, "Tournament add with succes!", "Message", JOptionPane.INFORMATION_MESSAGE);
+                                                            } else {
+                                                                JOptionPane.showMessageDialog(null, "Add tournament fail", "Message", JOptionPane.ERROR_MESSAGE);
+                                                            }
                                                         }
                                                     }
                                                 });
@@ -365,14 +390,18 @@ public class LogInView extends JFrame {
                                                         delete.addActionListener(new ActionListener() {
                                                             @Override
                                                             public void actionPerformed(ActionEvent actionEvent) {
-                                                                TournyRepository = TournamentServices.getTournyRepository();
-                                                                for(Tournament t : TournyRepository.find())
+                                                                if(Objects.equals(txt_tournament.getText(),""))
                                                                 {
-                                                                    if(Objects.equals(t.getName(),txt_tournament.getText()))
-                                                                    {
-                                                                        if(TournamentServices.remove(t))
-                                                                        {
+                                                                    JOptionPane.showMessageDialog(null, "No tournament name", "Message", JOptionPane.INFORMATION_MESSAGE);
+
+                                                                }
+                                                                else {
+                                                                    TournyRepository = TournamentServices.getTournyRepository();
+                                                                    for (Tournament t : TournyRepository.find()) {
+                                                                        if (Objects.equals(t.getName(), txt_tournament.getText())) {
+                                                                            if (TournamentServices.remove(t)) {
                                                                                 JOptionPane.showMessageDialog(null, "You delete the tournament with succes", "Delete", JOptionPane.INFORMATION_MESSAGE);
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
@@ -431,7 +460,7 @@ public class LogInView extends JFrame {
                                                         see_players.addActionListener(new ActionListener() {
                                                             @Override
                                                             public void actionPerformed(ActionEvent actionEvent) {
-                                                               see_tourny_frame.show(false);
+                                                                see_tourny_frame.show(false);
                                                                 final JFrame frame_see_players = new JFrame();
                                                                 frame_see_players.setVisible(true);
                                                                 frame_see_players.setSize(500,500);
@@ -459,6 +488,53 @@ public class LogInView extends JFrame {
                                                                         see_tourny_frame.show(true);
                                                                         frame_see_players.show(false);
                                                                     }
+                                                                });
+
+                                                                list.addActionListener(new ActionListener() {
+                                                                    @Override
+                                                                    public void actionPerformed(ActionEvent actionEvent) {
+
+                                                                        if(Objects.equals(txt_tournament.getText(),""))
+                                                                        {
+                                                                            JOptionPane.showMessageDialog(null, "No tournament list", "Message", JOptionPane.INFORMATION_MESSAGE);
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            see_tourny_frame.show(false);
+                                                                            final JFrame list_participant = new JFrame();
+                                                                            list_participant.setVisible(true);
+                                                                            list_participant.setSize(500,500);
+                                                                            JPanel panel_list = new JPanel(new GridBagLayout());
+                                                                            list_participant.getContentPane().add(panel_list, BorderLayout.NORTH);
+                                                                            GridBagConstraints c_list = new GridBagConstraints();
+                                                                            c_list.gridx = 0;
+                                                                            c_list.gridy = 0;
+                                                                            ParticipantRepository = ParticipantServices.getParticipantRepository();
+                                                                                    for(Tournament t:ParticipantRepository.find())
+                                                                                    {
+                                                                                        c_list.gridx = 0;
+                                                                                        JLabel tournament_name = new JLabel(t.getName());
+                                                                                        panel_list.add(tournament_name,c_list);
+                                                                                        c_list.gridx = 3;
+                                                                                        JLabel username_name = new JLabel(t.getUsername());
+                                                                                        panel_list.add(username_name,c_list);
+                                                                                        c_list.gridy++;
+                                                                                    }
+                                                                            JButton back = new JButton("Back");
+                                                                            panel_list.add(back,c_list);
+                                                                            back.addActionListener(new ActionListener() {
+                                                                                @Override
+                                                                                public void actionPerformed(ActionEvent actionEvent) {
+                                                                                    see_tourny_frame.show(true);
+                                                                                    list_participant.show(false);
+                                                                                }
+                                                                            });
+                                                                        }
+
+
+                                                                    }
+
+
                                                                 });
                                                             }
                                                         });
@@ -535,15 +611,20 @@ public class LogInView extends JFrame {
                                                                         adauga.addActionListener(new ActionListener() {
                                                                             @Override
                                                                             public void actionPerformed(ActionEvent actionEvent) {
-                                                                                TournyRepository = TournamentServices.getTournyRepository();
-                                                                                for(Tournament t:TournyRepository.find())
-                                                                                {
-                                                                                    if(Objects.equals(t.getName(),name_tournament_txt.getText()))
-                                                                                    {
-                                                                                        if(tournyController.AddDetails(t.getName(),details_tour_txt.getText()))
-                                                                                        {
-                                                                                            JOptionPane.showMessageDialog(null, "Details added with succes", "Details", JOptionPane.INFORMATION_MESSAGE);
+                                                                                if(Objects.equals(name_tournament_txt.getText(),"")||
+                                                                                  Objects.equals(details_tour_txt.getText(),"")
+                                                                                )
+                                                                                    JOptionPane.showMessageDialog(null, "No name or details", "Details", JOptionPane.INFORMATION_MESSAGE);
 
+                                                                                else {
+
+                                                                                    TournyRepository = TournamentServices.getTournyRepository();
+                                                                                    for (Tournament t : TournyRepository.find()) {
+                                                                                        if (Objects.equals(t.getName(), name_tournament_txt.getText())) {
+                                                                                            if (tournyController.AddDetails(t.getName(), details_tour_txt.getText())) {
+                                                                                                JOptionPane.showMessageDialog(null, "Details added with succes", "Details", JOptionPane.INFORMATION_MESSAGE);
+
+                                                                                            }
                                                                                         }
                                                                                     }
                                                                                 }
@@ -822,15 +903,20 @@ public class LogInView extends JFrame {
                                                                 c_details_see.gridx = 0;
                                                                 c_details_see.gridy = 0;
                                                                 TournyDetailsRepository = Tournament_detailsServices.getTourny_DetailsRepository();
-                                                                for(TournamentDetails t:TournyDetailsRepository.find())
+                                                                if(Objects.equals(field_name.getText(),""))
                                                                 {
-                                                                    if(Objects.equals(t.getName(),field_name.getText()))
-                                                                    {
-                                                                        JLabel details = new JLabel(t.getDetails());
-                                                                        panel_see_details.add(details,c_details_see);
-                                                                        c_details_see.gridy++;
-                                                                    }
+                                                                    JLabel error_message = new JLabel("The name of tournament is incorrect");
+                                                                    panel_see_details.add(error_message,c_details_see);
+                                                                }
+                                                                else {
+                                                                    for (TournamentDetails t : TournyDetailsRepository.find()) {
+                                                                        if (Objects.equals(t.getName(), field_name.getText())) {
+                                                                            JLabel details = new JLabel(t.getDetails());
+                                                                            panel_see_details.add(details, c_details_see);
+                                                                            c_details_see.gridy++;
+                                                                        }
 
+                                                                    }
                                                                 }
 
                                                                JButton back = new JButton("Back");
@@ -896,6 +982,10 @@ public class LogInView extends JFrame {
                                                         finish.addActionListener(new ActionListener() {
                                                             @Override
                                                             public void actionPerformed(ActionEvent e) {
+                                                                if(Objects.equals(textField_tournament.getText(),"") ||
+                                                                Objects.equals(textfield_participate.getText(),""))
+                                                                    JOptionPane.showMessageDialog(null, "No username or tournament name ", "Log In", JOptionPane.ERROR_MESSAGE);
+                                                                 else
                                                                 participantController.addParticipant(textField_tournament.getText(),textfield_participate.getText());
                                                             }
                                                         });
